@@ -1,3 +1,32 @@
-.node {
+.cell {
+	stroke:black;
+	stroke-width:0.5px;
+}
+
+.plot > .xaxis, .plot > .xlabel{
+	font-size:20px;
+}
+
+.dot {
 	
+}
+
+
+.bigcircle {
+	opacity:0.25;
+	stroke:black;
+	stroke-width:0.5px;
+}
+
+.smallcircle {
+	opacity:1;
+	stroke:black;
+	stroke-width:1px;
+}
+
+.mf {
+	fill:red;
+}
+.plot > .xlabel{
+	text-anchor:middle;
 }

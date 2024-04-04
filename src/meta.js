@@ -1,5 +1,5 @@
 export default {
-  "title": "Explorable Title",
-  "subtitle":"Explorable Subtitle",
-  "description": "This is a template for making a complexity explorable. The template can be used to create a new complexity explorable. This template implements the Vicsek Model."
+  "title": "Repliselmut",
+  "subtitle":"An organic simulation of the replicator-mutator equation",
+  "description": "This explorable illustrates the basic mechanism of evolution. In a population of replicating species, species with the highest fitness dominate until mutations yield yet more fit species. The fitness of the entire population increases steadily."
 }

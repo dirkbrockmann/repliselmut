@@ -3,16 +3,26 @@
 // of visualization which are done in viz.js
 
 import param from "./parameters.js"
-import {each,range,map,mean} from "lodash-es"
+import {each,range,map,random,sample,without} from "lodash-es"
 import {rad2deg,deg2rad} from "./utils"
+import {select as sw} from "weighted"
 
 const L = param.L;
-const dt = param.dt;
+
 
 // typically objects needed for the explorable
 // are defined here
 
 var agents = [];
+var fitness = []; 
+var N_species;
+
+
+function weightedChoice(agents) {
+	
+	const weights = agents.map(n=> Math.pow(n.fitness,param.selection_strength.widget.value()))	
+  	return sw(agents,weights)
+}
 
 // the initialization function, this is bundled in simulation.js with the initialization of
 // the visualization and effectively executed in index.js when the whole explorable is loaded
@@ -21,19 +31,19 @@ const initialize = () => {
 
 	// set/reset timer
 	param.timer={}; param.tick=0;
-
-	// make agents
-
-	const N = param.number_of_particles.choices[param.number_of_particles.widget.value()];
-	
-	agents = map(range(N), i => { return {
-				index:i, 
-				x:L*Math.random(), 
-				y:L*Math.random(),
-				theta: 2*Math.PI*Math.random(),
+	fitness = [{f:1,n:param.N0}];
+	N_species = 1;
+		
+	agents = map(range(param.N0), i => { return {
+				id:i, 
+				x:L*(Math.random()-0.5), 
+				y:L*(Math.random()-0.5),
+				type:0,
+				r:random(param.agent_size_min,param.agent_size_max),
+				fitness:1
 			} 
 	});
-	
+
 };
 
 // the go function, this is bundled in simulation.js with the go function of
@@ -44,32 +54,36 @@ const go  = () => {
 	
 	param.tick++;
 	
-	each(agents,a=>{
-		
-		var dx = dt*param.speed.widget.value()*Math.cos(a.theta);
-		var dy = dt*param.speed.widget.value()*Math.sin(a.theta);
-		
-		const x_new = a.x + dx;
-		const y_new = a.y + dy;
-		
-		if (x_new < 0) {dx+=L};
-		if (y_new < 0) {dy+=L};
-		if (x_new > L) {dx-=L};
-		if (y_new > L) {dy-=L};  
-		
-		a.x += dx;
-		a.y += dy;
-		
-		var neighbors = agents.filter(d =>  (d.x-a.x)**2 + (d.y-a.y)**2 <= param.interaction_radius.widget.value()**2 )
-		
-		var mx = mean(map(neighbors,x=> Math.cos(deg2rad(x.theta))));
-		var my = mean(map(neighbors,x=> Math.sin(deg2rad(x.theta))));	
-		
-		a.theta = rad2deg(Math.atan2(my,mx))
-		
-		a.theta += deg2rad(param.wiggle.widget.value())*(Math.random()-0.5)
-		
+	const n = weightedChoice(agents);
+
+	const th = 2*Math.PI*Math.random();
+	let type = n.type;
+	let fit  = n.fitness;
+
+	if (Math.random()<param.mutation_rate.widget.value()){
+		N_species++;
+		type = N_species-1;
+		fit += param.variation_magnitude.widget.value()*(Math.random()-0.5);		
+		fitness.push({f:fit,n:1})
+	} else {
+		fitness[type].n+=1;
+	}
+	
+
+	agents.push({
+		id:param.N0+param.tick,
+		x:n.x+n.r*Math.cos(th),
+		y:n.y+n.r*Math.sin(th),
+		r:random(param.agent_size_min,param.agent_size_max),
+		type:type,
+		fitness:fit
 	})
+	
+	if(agents.length>param.Nmax){
+		let eimer = sample(agents)
+		agents = without(agents,eimer)
+		fitness[eimer.type].n-=1
+	}
 	
 }
 
@@ -79,10 +93,9 @@ const go  = () => {
 
 const update = () => {
 	
-	each(agents,x => {x.active = x.index < param.number_of_particles.widget.value() ? true : false})
-
+	
 }
 
 // the three functions initialize, go and update are exported, also all variables
 // that are required for the visualization
-export {agents,initialize,go,update}
+export {agents,fitness,initialize,go,update}
