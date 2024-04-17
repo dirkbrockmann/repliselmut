@@ -1,5 +1,6 @@
 export default {
-  "title": "Repliselmut",
-  "subtitle":"An organic simulation of the replicator-mutator equation",
-  "description": "This explorable illustrates the basic mechanism of evolution. In a population of replicating species, species with the highest fitness dominate until mutations yield yet more fit species. The fitness of the entire population increases steadily."
+  "title": "Evolution",
+  "subtitle": "Replikation, Mutation und Selektion steigern die Fitness",
+  "description": "Das Explorable zeigt anschaulich wie sich durch die Kombination von Replikation, Selektion und Mutation in einer Population sich vermehrender Spezies ganz natürlich immer fittere Varianten durchsetzen.",
+  
 }

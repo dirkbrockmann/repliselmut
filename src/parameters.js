@@ -16,15 +16,18 @@ export default {
 	
 		variation_magnitude: {
 			range:[0,1],
-			default:0.9
+			default:0.9,
+			label:"Variationsstärke"
 		},
 		mutation_rate: {
 			range:[0,1.0/50],
-		default:1/100
+		default:1/100,
+			label:"Mutationsrate"
 		},
 		selection_strength:{
 			range : [2,10],
-			default : 8
+			default : 8,
+			label:"Selektionsdruck"
 		}
 }
 
