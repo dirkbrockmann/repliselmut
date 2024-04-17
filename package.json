@@ -2,7 +2,7 @@
   "name": "@explorables/repliselmut",
   "title": "Repliselmut",
   "subtitle": "An organic simulation of the replicator-mutator equation",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "CC-BY-4.0",
   "description": "This explorable illustrates the basic mechanism of evolution. In a population of replicating species, species with the highest fitness dominate until mutations yield yet more fit species. The fitness of the entire population increases steadily.",
   "repository": {
