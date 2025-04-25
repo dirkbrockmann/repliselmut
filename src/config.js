@@ -25,7 +25,7 @@ export default {
 		mf_size:5
 	},
 	simulation: {
-		delay:0,
+		delay:10,
 		colormap:"vik",
 		ncolors:100,
 		velocityDecay:0.5,
