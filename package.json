@@ -4,7 +4,7 @@
   "subtitle": "An organic simulation of the replicator-mutator equation",
   "description": "This explorable illustrates the basic mechanism of evolution. In a population of replicating species, species with the highest fitness dominate until mutations yield yet more fit species. The fitness of the entire population increases steadily.",
   "author": "Dirk Brockmann (https://synosy.github.io)",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "license": "CC-BY-4.0",
   "repository": {
     "type": "git",
